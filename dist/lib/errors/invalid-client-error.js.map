@@ -1,0 +1,1 @@
+{"version":3,"file":"invalid-client-error.js","sourceRoot":"","sources":["../../../lib/errors/invalid-client-error.ts"],"names":[],"mappings":";;AAAA,+CAA2C;AAW3C,MAAa,kBAAmB,SAAQ,wBAAU;IAChD,YAAY,UAA0B,EAAE,EAAE,UAAgB;QACxD,KAAK,CAAC,OAAO,kBAAI,IAAI,EAAE,GAAG,EAAE,IAAI,EAAE,gBAAgB,IAAK,UAAU,EAAG,CAAC;IACvE,CAAC;CACF;AAJD,gDAIC"}

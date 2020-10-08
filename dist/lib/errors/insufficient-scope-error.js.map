@@ -1,0 +1,1 @@
+{"version":3,"file":"insufficient-scope-error.js","sourceRoot":"","sources":["../../../lib/errors/insufficient-scope-error.ts"],"names":[],"mappings":";;AAAA,+CAA2C;AAU3C,MAAa,sBAAuB,SAAQ,wBAAU;IACpD,YAAY,UAA0B,EAAE,EAAE,UAAgB;QACxD,KAAK,CAAC,OAAO,kBAAI,IAAI,EAAE,GAAG,EAAE,IAAI,EAAE,oBAAoB,IAAK,UAAU,EAAG,CAAC;IAC3E,CAAC;CACF;AAJD,wDAIC"}

@@ -42,42 +42,14 @@
       "email": "marco.luethy@gmail.com"
     }
   ],
-  "main": "dist/index.js",
+  "main": "index.js",
   "engines": {
     "node": ">=8.10"
   },
   "license": "MIT",
-  "scripts": {
-    "lint": "tslint -p tsconfig.build.json -c tslint.json",
-    "lint:all": "tslint -p tsconfig.json -c tslint.json",
-    "build:clean": "npx shx rm -rf ./dist",
-    "build": "npx npm-run-all build:clean build:test:*",
-    "build:test:src": "npx tsc -p tsconfig.json",
-    "build:test:package": "node ./scripts/build-prod.js",
-    "build:prod": "npx npm-run-all build:clean build:prod:*",
-    "build:prod:src": "npx tsc -p tsconfig.build.json",
-    "build:prod:package": "node ./scripts/build-prod.js",
-    "test": "npx mocha 'test/**/*.spec.ts' --config 'test/.mocharc.jsonc'"
-  },
   "repository": {
     "url": "https://github.com/oauthjs/node-oauth2-server.git",
     "type": "git"
-  },
-  "devDependencies": {
-    "@types/mocha": "^5.2.7",
-    "@types/sinon": "^7.5.1",
-    "@types/basic-auth": "^1.1.2",
-    "@types/node": "^11.15.3",
-    "@types/statuses": "^1.5.0",
-    "@types/type-is": "^1.6.3",
-    "mocha": "^6.2.2",
-    "npm-run-all": "^4.1.5",
-    "should": "^13.2.3",
-    "shx": "^0.3.2",
-    "sinon": "^7.5.0",
-    "ts-node": "^8.5.4",
-    "tslint": "^5.20.1",
-    "typescript": "^3.7.2"
   },
   "dependencies": {
     "basic-auth": "^2.0.1",
