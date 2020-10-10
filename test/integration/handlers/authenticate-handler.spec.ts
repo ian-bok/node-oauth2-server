@@ -162,11 +162,11 @@ describe('AuthenticateHandler integration', () => {
 
     it('should set the `WWW-Authenticate` header if an InvalidRequestError is thrown without message', () => {
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InvalidRequestError();
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
+      const handler = new AuthenticateHandler({ model });
       const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
@@ -183,11 +183,11 @@ describe('AuthenticateHandler integration', () => {
     it('should set the `WWW-Authenticate` header if an InvalidRequestError is thrown with message', () => {
       const errorDescription = 'Error description';
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InvalidRequestError(errorDescription);
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
+      const handler = new AuthenticateHandler({ model });
       const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
@@ -203,12 +203,12 @@ describe('AuthenticateHandler integration', () => {
 
     it('should set the `WWW-Authenticate` header if an InvalidTokenError is thrown without message', () => {
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InvalidTokenError();
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
-      const request = new Request({ body: {}, headers: { 'Authorization': 'Bearer foo' }, method: 'ANY', query: {} });
+      const handler = new AuthenticateHandler({ model });
+      const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)
@@ -224,12 +224,12 @@ describe('AuthenticateHandler integration', () => {
     it('should set the `WWW-Authenticate` header if an InvalidTokenError is thrown with message', () => {
       const errorDescription = 'Error description';
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InvalidTokenError(errorDescription);
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
-      const request = new Request({ body: {}, headers: { 'Authorization': 'Bearer foo' }, method: 'ANY', query: {} });
+      const handler = new AuthenticateHandler({ model });
+      const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)
@@ -244,12 +244,12 @@ describe('AuthenticateHandler integration', () => {
 
     it('should set the `WWW-Authenticate` header if an InsufficientScopeError is thrown without message', () => {
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InsufficientScopeError();
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
-      const request = new Request({ body: {}, headers: { 'Authorization': 'Bearer foo' }, method: 'ANY', query: {} });
+      const handler = new AuthenticateHandler({ model });
+      const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)
@@ -265,12 +265,12 @@ describe('AuthenticateHandler integration', () => {
     it('should set the `WWW-Authenticate` header if an InsufficientScopeError is thrown with message', () => {
       const errorDescription = 'Error description';
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           throw new InsufficientScopeError(errorDescription);
-        }
+        },
       };
-      const handler = new AuthenticateHandler({ model: model });
-      const request = new Request({ body: {}, headers: { 'Authorization': 'Bearer foo' }, method: 'ANY', query: {} });
+      const handler = new AuthenticateHandler({ model });
+      const request = new Request({ body: {}, headers: { Authorization: 'Bearer foo' }, method: 'ANY', query: {} });
       const response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)

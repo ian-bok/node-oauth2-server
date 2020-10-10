@@ -616,23 +616,23 @@ describe('AuthorizationCodeGrantType integration', () => {
 
     describe('with PKCE', function() {
       it('should throw an error if the `code_verifier` is invalid with S256 code challenge method', () => {
-        var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-        var authorizationCode = {
+        const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+        const authorizationCode = {
           authorizationCode: 12345,
           client: { id: 'foobar' },
           expiresAt: new Date(new Date().getTime() * 2),
           user: {},
           codeChallengeMethod: 'S256',
-          codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest())
+          codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest()),
         };
-        var client: any = { id: 'foobar', isPublic: true };
-        var model = {
-          getAuthorizationCode: function() { return authorizationCode; },
-          revokeAuthorizationCode: function() {},
-          saveToken: function() {}
+        const client: any = { id: 'foobar', isPublic: true };
+        const model = {
+          getAuthorizationCode() { return authorizationCode; },
+          revokeAuthorizationCode() {},
+          saveToken() {},
         };
-        var grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model: model });
-        var request = new Request({ body: { code: 12345, code_verifier: 'foo' }, headers: {}, method: 'POST', query: {} });
+        const grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model });
+        const request = new Request({ body: { code: 12345, code_verifier: 'foo' }, headers: {}, method: 'POST', query: {} });
 
         return grantType.getAuthorizationCode(request, client)
           .then(() => {
@@ -645,23 +645,23 @@ describe('AuthorizationCodeGrantType integration', () => {
       });
 
       it('should throw an error if the `code_verifier` is invalid with plain code challenge method', () => {
-        var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-        var authorizationCode = {
+        const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+        const authorizationCode = {
           authorizationCode: 12345,
           client: { id: 'foobar' },
           expiresAt: new Date(new Date().getTime() * 2),
           user: {},
           codeChallengeMethod: 'plain',
-          codeChallenge: codeVerifier
+          codeChallenge: codeVerifier,
         };
-        var client: any = { id: 'foobar', isPublic: true };
-        var model = {
-          getAuthorizationCode: function() { return authorizationCode; },
-          revokeAuthorizationCode: function() {},
-          saveToken: function() {}
+        const client: any = { id: 'foobar', isPublic: true };
+        const model = {
+          getAuthorizationCode() { return authorizationCode; },
+          revokeAuthorizationCode() {},
+          saveToken() {},
         };
-        var grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model: model });
-        var request = new Request({ body: { code: 12345, code_verifier: 'foo' }, headers: {}, method: 'POST', query: {} });
+        const grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model });
+        const request = new Request({ body: { code: 12345, code_verifier: 'foo' }, headers: {}, method: 'POST', query: {} });
 
         return grantType.getAuthorizationCode(request, client)
           .then(() => {
@@ -674,23 +674,23 @@ describe('AuthorizationCodeGrantType integration', () => {
       });
 
       it('should return an auth code when `code_verifier` is valid with S256 code challenge method', () => {
-        var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-        var authorizationCode = {
+        const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+        const authorizationCode = {
           authorizationCode: 12345,
           client: { id: 'foobar', isPublic: true },
           expiresAt: new Date(new Date().getTime() * 2),
           user: {},
           codeChallengeMethod: 'S256',
-          codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest())
+          codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest()),
         };
-        var client: any = { id: 'foobar', isPublic: true };
-        var model = {
-          getAuthorizationCode: function() { return authorizationCode; },
-          revokeAuthorizationCode: function() {},
-          saveToken: function() {}
+        const client: any = { id: 'foobar', isPublic: true };
+        const model = {
+          getAuthorizationCode() { return authorizationCode; },
+          revokeAuthorizationCode() {},
+          saveToken() {},
         };
-        var grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model: model });
-        var request = new Request({ body: { code: 12345, code_verifier: codeVerifier }, headers: {}, method: 'POST', query: {} });
+        const grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model });
+        const request = new Request({ body: { code: 12345, code_verifier: codeVerifier }, headers: {}, method: 'POST', query: {} });
 
         return grantType.getAuthorizationCode(request, client)
           .then(function(data) {
@@ -702,23 +702,23 @@ describe('AuthorizationCodeGrantType integration', () => {
       });
 
       it('should return an auth code when `code_verifier` is valid with plain code challenge method', () => {
-        var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-        var authorizationCode = {
+        const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+        const authorizationCode = {
           authorizationCode: 12345,
           client: { id: 'foobar' },
           expiresAt: new Date(new Date().getTime() * 2),
           user: {},
           codeChallengeMethod: 'plain',
-          codeChallenge: codeVerifier
+          codeChallenge: codeVerifier,
         };
-        var client: any = { id: 'foobar', isPublic: true };
-        var model = {
-          getAuthorizationCode: function() { return authorizationCode; },
-          revokeAuthorizationCode: function() {},
-          saveToken: function() {}
+        const client: any = { id: 'foobar', isPublic: true };
+        const model = {
+          getAuthorizationCode() { return authorizationCode; },
+          revokeAuthorizationCode() {},
+          saveToken() {},
         };
-        var grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model: model });
-        var request = new Request({ body: { code: 12345, code_verifier: codeVerifier }, headers: {}, method: 'POST', query: {} });
+        const grantType = new AuthorizationCodeGrantType({ accessTokenLifetime: 123, model });
+        const request = new Request({ body: { code: 12345, code_verifier: codeVerifier }, headers: {}, method: 'POST', query: {} });
 
         return grantType.getAuthorizationCode(request, client)
           .then(function(data) {

@@ -1267,34 +1267,34 @@ describe('TokenHandler integration', () => {
 
       describe('with PKCE', function() {
         it('should return a token when code verifier is valid using S256 code challenge method', () => {
-          var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-          var authorizationCode = {
+          const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+          const authorizationCode = {
             authorizationCode: 12345,
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() + 60000),
             user: {},
             codeChallengeMethod: 'S256',
-            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest())
+            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest()),
           };
-          var client = { id: 'foobar', grants: ['authorization_code'] };
-          var token = {};
-          var model = {
-            getAuthorizationCode: function() { return authorizationCode; },
-            getClient: function() {},
-            saveToken: function() { return token; },
-            validateScope: function() { return 'foo'; },
-            revokeAuthorizationCode: function() { return authorizationCode; }
+          const client = { id: 'foobar', grants: ['authorization_code'] };
+          const token = {};
+          const model = {
+            getAuthorizationCode() { return authorizationCode; },
+            getClient() {},
+            saveToken() { return token; },
+            validateScope() { return 'foo'; },
+            revokeAuthorizationCode() { return authorizationCode; },
           };
-          var handler = new TokenHandler({ accessTokenLifetime: 120, model: model, refreshTokenLifetime: 120 });
-          var request = new Request({
+          const handler = new TokenHandler({ accessTokenLifetime: 120, model, refreshTokenLifetime: 120 });
+          const request = new Request({
             body: {
               code: 12345,
               grant_type: 'authorization_code',
-              code_verifier: codeVerifier
+              code_verifier: codeVerifier,
             },
             headers: {},
             method: 'POST',
-            query: {}
+            query: {},
           });
 
           return handler.handleGrantType(request, client)
@@ -1304,34 +1304,34 @@ describe('TokenHandler integration', () => {
         });
 
         it('should return a token when code verifier is valid using plain code challenge method', () => {
-          var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-          var authorizationCode = {
+          const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+          const authorizationCode = {
             authorizationCode: 12345,
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() + 60000),
             user: {},
             codeChallengeMethod: 'plain',
-            codeChallenge: codeVerifier
+            codeChallenge: codeVerifier,
           };
-          var client = { id: 'foobar', grants: ['authorization_code'] };
-          var token = {};
-          var model = {
-            getAuthorizationCode: function() { return authorizationCode; },
-            getClient: function() {},
-            saveToken: function() { return token; },
-            validateScope: function() { return 'foo'; },
-            revokeAuthorizationCode: function() { return authorizationCode; }
+          const client = { id: 'foobar', grants: ['authorization_code'] };
+          const token = {};
+          const model = {
+            getAuthorizationCode() { return authorizationCode; },
+            getClient() {},
+            saveToken() { return token; },
+            validateScope() { return 'foo'; },
+            revokeAuthorizationCode() { return authorizationCode; },
           };
-          var handler = new TokenHandler({ accessTokenLifetime: 120, model: model, refreshTokenLifetime: 120 });
-          var request = new Request({
+          const handler = new TokenHandler({ accessTokenLifetime: 120, model, refreshTokenLifetime: 120 });
+          const request = new Request({
             body: {
               code: 12345,
               grant_type: 'authorization_code',
-              code_verifier: codeVerifier
+              code_verifier: codeVerifier,
             },
             headers: {},
             method: 'POST',
-            query: {}
+            query: {},
           });
 
           return handler.handleGrantType(request, client)
@@ -1341,34 +1341,34 @@ describe('TokenHandler integration', () => {
         });
 
         it('should throw an invalid grant error when code verifier is invalid', () => {
-          var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-          var authorizationCode = {
+          const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+          const authorizationCode = {
             authorizationCode: 12345,
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() + 60000),
             user: {},
             codeChallengeMethod: 'S256',
-            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest())
+            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest()),
           };
-          var client = { id: 'foobar', grants: ['authorization_code'] };
-          var token = {};
-          var model = {
-            getAuthorizationCode: function() { return authorizationCode; },
-            getClient: function() {},
-            saveToken: function() { return token; },
-            validateScope: function() { return 'foo'; },
-            revokeAuthorizationCode: function() { return authorizationCode; }
+          const client = { id: 'foobar', grants: ['authorization_code'] };
+          const token = {};
+          const model = {
+            getAuthorizationCode() { return authorizationCode; },
+            getClient() {},
+            saveToken() { return token; },
+            validateScope() { return 'foo'; },
+            revokeAuthorizationCode() { return authorizationCode; },
           };
-          var handler = new TokenHandler({ accessTokenLifetime: 120, model: model, refreshTokenLifetime: 120 });
-          var request = new Request({
+          const handler = new TokenHandler({ accessTokenLifetime: 120, model, refreshTokenLifetime: 120 });
+          const request = new Request({
             body: {
               code: 12345,
               grant_type: 'authorization_code',
-              code_verifier: '123123123123123123123123123123123123123123123'
+              code_verifier: '123123123123123123123123123123123123123123123',
             },
             headers: {},
             method: 'POST',
-            query: {}
+            query: {},
           });
 
           return handler.handleGrantType(request, client)
@@ -1382,33 +1382,33 @@ describe('TokenHandler integration', () => {
         });
 
         it('should throw an invalid grant error when code verifier is missing', function() {
-          var codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
-          var authorizationCode = {
+          const codeVerifier = stringUtil.base64URLEncode(crypto.randomBytes(32));
+          const authorizationCode = {
             authorizationCode: 12345,
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() + 60000),
             user: {},
             codeChallengeMethod: 'S256',
-            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest())
+            codeChallenge: stringUtil.base64URLEncode(crypto.createHash('sha256').update(codeVerifier).digest()),
           };
-          var client = { id: 'foobar', grants: ['authorization_code'] };
-          var token = {};
-          var model = {
-            getAuthorizationCode: function() { return authorizationCode; },
-            getClient: function() {},
-            saveToken: function() { return token; },
-            validateScope: function() { return 'foo'; },
-            revokeAuthorizationCode: function() { return authorizationCode; }
+          const client = { id: 'foobar', grants: ['authorization_code'] };
+          const token = {};
+          const model = {
+            getAuthorizationCode() { return authorizationCode; },
+            getClient() {},
+            saveToken() { return token; },
+            validateScope() { return 'foo'; },
+            revokeAuthorizationCode() { return authorizationCode; },
           };
-          var handler = new TokenHandler({ accessTokenLifetime: 120, model: model, refreshTokenLifetime: 120 });
-          var request = new Request({
+          const handler = new TokenHandler({ accessTokenLifetime: 120, model, refreshTokenLifetime: 120 });
+          const request = new Request({
             body: {
               code: 12345,
-              grant_type: 'authorization_code'
+              grant_type: 'authorization_code',
             },
             headers: {},
             method: 'POST',
-            query: {}
+            query: {},
           });
 
           return handler.handleGrantType(request, client)
@@ -1422,31 +1422,31 @@ describe('TokenHandler integration', () => {
         });
 
         it('should throw an invalid grant error when code verifier is present but code challenge is missing', () => {
-          var authorizationCode = {
+          const authorizationCode = {
             authorizationCode: 12345,
             client: { id: 'foobar' },
             expiresAt: new Date(new Date().getTime() + 60000),
-            user: {}
+            user: {},
           };
-          var client = { id: 'foobar', grants: ['authorization_code'] };
-          var token = {};
-          var model = {
-            getAuthorizationCode: function() { return authorizationCode; },
-            getClient: function() {},
-            saveToken: function() { return token; },
-            validateScope: function() { return 'foo'; },
-            revokeAuthorizationCode: function() { return authorizationCode; }
+          const client = { id: 'foobar', grants: ['authorization_code'] };
+          const token = {};
+          const model = {
+            getAuthorizationCode() { return authorizationCode; },
+            getClient() {},
+            saveToken() { return token; },
+            validateScope() { return 'foo'; },
+            revokeAuthorizationCode() { return authorizationCode; },
           };
-          var handler = new TokenHandler({ accessTokenLifetime: 120, model: model, refreshTokenLifetime: 120 });
-          var request = new Request({
+          const handler = new TokenHandler({ accessTokenLifetime: 120, model, refreshTokenLifetime: 120 });
+          const request = new Request({
             body: {
               code: 12345,
               grant_type: 'authorization_code',
-              code_verifier: '123123123123123123123123123123123123123123123'
+              code_verifier: '123123123123123123123123123123123123123123123',
             },
             headers: {},
             method: 'POST',
-            query: {}
+            query: {},
           });
 
           return handler.handleGrantType(request, client)

@@ -191,12 +191,12 @@ describe('CodeResponseType integration', () => {
 
     describe('with PKCE', function() {
       it('should save codeChallenge and codeChallengeMethod', function() {
-        var model = {
-          getAccessToken: function() {},
-          getClient: function() {},
-          saveAuthorizationCode: sinon.stub().returns({})
+        const model = {
+          getAccessToken() {},
+          getClient() {},
+          saveAuthorizationCode: sinon.stub().returns({}),
         };
-        var handler = new CodeResponseType({ authorizationCodeLifetime: 120, model: model });
+        const handler = new CodeResponseType({ authorizationCodeLifetime: 120, model });
 
         return handler.saveAuthorizationCode('foo', new Date(12345), 'qux', { id: 'biz' } as Client, 'baz', { id: 'boz' } as User, 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM', 'S256')
           .then(function() {
@@ -209,12 +209,12 @@ describe('CodeResponseType integration', () => {
       });
 
       it('should save codeChallenge and set codeChallengeMethod to `plain` when codeChallengeMethod is not present', function() {
-        var model = {
-          getAccessToken: function() {},
-          getClient: function() {},
-          saveAuthorizationCode: sinon.stub().returns({})
+        const model = {
+          getAccessToken() {},
+          getClient() {},
+          saveAuthorizationCode: sinon.stub().returns({}),
         };
-        var handler = new CodeResponseType({ authorizationCodeLifetime: 120, model: model });
+        const handler = new CodeResponseType({ authorizationCodeLifetime: 120, model });
 
         return handler.saveAuthorizationCode('foo', new Date(12345), 'qux', { id: 'biz' } as Client, 'baz', { id: 'boz' } as User, 'E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM', null)
           .then(function() {
@@ -227,12 +227,12 @@ describe('CodeResponseType integration', () => {
       });
 
       it('should save code but not save codeChallenge or codeChallengeMethod when codeChallenge is not present and codeChallengeMethod is present', function() {
-        var model = {
-          getAccessToken: function() {},
-          getClient: function() {},
-          saveAuthorizationCode: sinon.stub().returns({})
+        const model = {
+          getAccessToken() {},
+          getClient() {},
+          saveAuthorizationCode: sinon.stub().returns({}),
         };
-        var handler = new CodeResponseType({ authorizationCodeLifetime: 120, model: model });
+        const handler = new CodeResponseType({ authorizationCodeLifetime: 120, model });
 
         return handler.saveAuthorizationCode('foo', new Date(12345), 'qux', { id: 'biz' } as Client, 'baz', { id: 'boz' } as User, '', 'S256')
           .then(function() {

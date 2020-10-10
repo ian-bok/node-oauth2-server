@@ -191,18 +191,18 @@ describe('AuthorizeHandler integration', () => {
 
     it('should throw an error if `allowed` is `false`', () => {
       const model = {
-        getAccessToken: function() {
+        getAccessToken() {
           return {
             user: {},
-            accessTokenExpiresAt: new Date(new Date().getTime() + 10000)
+            accessTokenExpiresAt: new Date(new Date().getTime() + 10000),
           };
         },
-        getClient: function() {
+        getClient() {
           return { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
         },
-        saveAuthorizationCode: function() {
+        saveAuthorizationCode() {
           throw new Error('Unhandled exception');
-        }
+        },
       };
       const handler = new AuthorizeHandler({
         authorizationCodeLifetime: 120,
@@ -210,16 +210,16 @@ describe('AuthorizeHandler integration', () => {
       });
       const request = new Request({
         body: {
-          client_id: 'test'
+          client_id: 'test',
         },
         headers: {
-          'Authorization': 'Bearer foo'
+          Authorization: 'Bearer foo',
         },
         method: 'ANY',
         query: {
           allowed: 'false',
-          state: 'foobar'
-        }
+          state: 'foobar',
+        },
       });
       const response = new Response({ body: {}, headers: {} });
 
@@ -446,84 +446,84 @@ describe('AuthorizeHandler integration', () => {
     });
 
     it('should redirect to a successful response if `model.validateScope` is not defined', function() {
-      var client = { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
-      var model = {
-        getAccessToken: function() {
+      let client = { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
+      let model = {
+        getAccessToken() {
           return {
-            client: client,
+            client,
             user: {},
-            accessTokenExpiresAt: new Date(new Date().getTime() + 10000)
+            accessTokenExpiresAt: new Date(new Date().getTime() + 10000),
           };
         },
-        getClient: function() {
+        getClient() {
           return client;
         },
-        saveAuthorizationCode: function() {
-          return { authorizationCode: 12345, client: client };
-        }
+        saveAuthorizationCode() {
+          return { authorizationCode: 12345, client };
+        },
       };
-      var handler = new AuthorizeHandler({ authorizationCodeLifetime: 120, model: model });
-      var request = new Request({
+      let handler = new AuthorizeHandler({ authorizationCodeLifetime: 120, model });
+      let request = new Request({
         body: {
           client_id: 12345,
-          response_type: 'code'
+          response_type: 'code',
         },
         headers: {
-          'Authorization': 'Bearer foo'
+          Authorization: 'Bearer foo',
         },
         method: 'POST',
         query: {
           scope: 'read',
-          state: 'foobar'
-        }
+          state: 'foobar',
+        },
       });
-      var response = new Response({ body: {}, headers: {} });
+      let response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)
         .then(function(data) {
           data.should.eql({
             authorizationCode: 12345,
-            client: client
+            client,
           });
         });
     });
 
     it('should redirect to an error response if `scope` is insufficient', function() {
-      var client = { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
-      var model = {
-        getAccessToken: function() {
+      let client = { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
+      let model = {
+        getAccessToken() {
           return {
-            client: client,
+            client,
             user: {},
-            accessTokenExpiresAt: new Date(new Date().getTime() + 10000)
+            accessTokenExpiresAt: new Date(new Date().getTime() + 10000),
           };
         },
-        getClient: function() {
+        getClient() {
           return client;
         },
-        saveAuthorizationCode: function() {
-          return { authorizationCode: 12345, client: client };
+        saveAuthorizationCode() {
+          return { authorizationCode: 12345, client };
         },
-        validateScope: function() {
+        validateScope() {
           return false;
-        }
+        },
       };
-      var handler = new AuthorizeHandler({ authorizationCodeLifetime: 120, model: model });
-      var request = new Request({
+      let handler = new AuthorizeHandler({ authorizationCodeLifetime: 120, model });
+      let request = new Request({
         body: {
           client_id: 12345,
-          response_type: 'code'
+          response_type: 'code',
         },
         headers: {
-          'Authorization': 'Bearer foo'
+          Authorization: 'Bearer foo',
         },
         method: 'POST',
         query: {
           scope: 'read',
-          state: 'foobar'
-        }
+          state: 'foobar',
+        },
       });
-      var response = new Response({ body: {}, headers: {} });
+      let response = new Response({ body: {}, headers: {} });
 
       return handler.handle(request, response)
         .then(() => {
