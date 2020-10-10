@@ -48,6 +48,7 @@ class AuthenticateHandler {
         catch (e) {
             if (e instanceof errors_1.UnauthorizedRequestError) {
                 response.set('WWW-Authenticate', 'Bearer realm="Service"');
+                response.status = 401;
             }
             else if (e instanceof errors_1.InvalidRequestError) {
                 if (e.message) {
@@ -56,6 +57,7 @@ class AuthenticateHandler {
                 else {
                     response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_request"`);
                 }
+                response.status = 400;
             }
             else if (e instanceof errors_1.InvalidTokenError) {
                 if (e.message) {
@@ -64,6 +66,7 @@ class AuthenticateHandler {
                 else {
                     response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_token"`);
                 }
+                response.status = 401;
             }
             else if (e instanceof errors_1.InsufficientScopeError) {
                 if (e.message) {
@@ -72,6 +75,7 @@ class AuthenticateHandler {
                 else {
                     response.set('WWW-Authenticate', `Bearer realm="Service",error="insufficient_scope"`);
                 }
+                response.status = 403;
             }
             if (!(e instanceof errors_1.OAuthError)) {
                 throw new errors_1.ServerError(e);

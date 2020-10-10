@@ -156,6 +156,7 @@ describe('AuthenticateHandler integration', () => {
           response
             .get('WWW-Authenticate')
             .should.equal('Bearer realm="Service"');
+          response.status.should.equal(401);
         });
     });
 
@@ -175,6 +176,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal('Bearer realm="Service",error="invalid_request",error_description="Bad Request"');
+          response.status.should.equal(400);
         });
     });
 
@@ -195,6 +197,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal(`Bearer realm="Service",error="invalid_request",error_description="${errorDescription}"`);
+          response.status.should.equal(400);
         });
     });
 
@@ -214,6 +217,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal('Bearer realm="Service",error="invalid_token",error_description="Unauthorized"');
+          response.status.should.equal(401);
         });
     });
 
@@ -234,6 +238,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal(`Bearer realm="Service",error="invalid_token",error_description="${errorDescription}"`);
+          response.status.should.equal(401);
         });
     });
 
@@ -253,6 +258,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal('Bearer realm="Service",error="insufficient_scope",error_description="Forbidden"');
+          response.status.should.equal(403);
         });
     });
 
@@ -273,6 +279,7 @@ describe('AuthenticateHandler integration', () => {
         })
         .catch(() => {
           response.get('WWW-Authenticate').should.equal(`Bearer realm="Service",error="insufficient_scope",error_description="${errorDescription}"`);
+          response.status.should.equal(403);
         });
     });
 
