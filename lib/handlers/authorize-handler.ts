@@ -93,7 +93,7 @@ export class AuthorizeHandler {
     let state: string;
     let RequestedResponseType: any;
     let responseType: any;
-    const uri = this.getRedirectUri(request, client);
+    const uri: string = this.getRedirectUri(request, client);
     try {
       const requestedScope = this.getScope(request);
 
@@ -265,7 +265,7 @@ export class AuthorizeHandler {
    * Get redirect URI.
    */
 
-  getRedirectUri(request: Request, client: Client) {
+  getRedirectUri(request: Request, client: Client): string {
     return (
       request.body.redirect_uri ||
       request.query.redirect_uri ||
@@ -321,10 +321,10 @@ export class AuthorizeHandler {
    */
 
   buildErrorRedirectUri(
-    redirectUri: any,
+    redirectUri: string,
     responseType: CodeResponseType | TokenResponseType,
     error: Error,
-  ) {
+  ): url.UrlWithParsedQuery {
     let uri = url.parse(redirectUri, true);
 
     if (responseType) {
@@ -356,9 +356,9 @@ export class AuthorizeHandler {
 
   updateResponse(
     response: Response,
-    redirectUri: any,
+    redirectUri: url.UrlWithParsedQuery,
     responseType: CodeResponseType | TokenResponseType,
-    state: any,
+    state: string,
   ) {
     if (responseType && state) {
       // tslint:disable-next-line:no-parameter-reassignment
