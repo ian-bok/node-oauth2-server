@@ -108,7 +108,6 @@ class AuthorizationCodeGrantType extends _1.AbstractGrantType {
         return code;
     }
     async saveToken(user, client, authorizationCode, scope) {
-        const accessScope = await this.validateScope(user, client, scope);
         const accessToken = await this.generateAccessToken(client, user, scope);
         const refreshToken = await this.generateRefreshToken(client, user, scope);
         const accessTokenExpiresAt = this.getAccessTokenExpiresAt();
@@ -119,7 +118,7 @@ class AuthorizationCodeGrantType extends _1.AbstractGrantType {
             accessTokenExpiresAt,
             refreshToken,
             refreshTokenExpiresAt,
-            scope: accessScope,
+            scope,
         };
         return this.model.saveToken(token, client, user);
     }

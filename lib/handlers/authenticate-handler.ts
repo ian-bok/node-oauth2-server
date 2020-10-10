@@ -91,6 +91,27 @@ export class AuthenticateHandler {
       // @see https://tools.ietf.org/html/rfc6750#section-3.1
       if (e instanceof UnauthorizedRequestError) {
         response.set('WWW-Authenticate', 'Bearer realm="Service"');
+      } else if (e instanceof InvalidRequestError) {
+        if (e.message) {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_request",error_description="${e.message}"`);
+        }
+        else {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_request"`);
+        }
+      } else if (e instanceof InvalidTokenError) {
+        if (e.message) {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_token",error_description="${e.message}"`)
+        }
+        else {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="invalid_token"`);
+        }
+      } else if (e instanceof InsufficientScopeError) {
+        if (e.message) {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="insufficient_scope",error_description="${e.message}"`);
+        }
+        else {
+          response.set('WWW-Authenticate', `Bearer realm="Service",error="insufficient_scope"`);
+        }
       }
 
       if (!(e instanceof OAuthError)) {
