@@ -191,19 +191,35 @@ describe('AuthorizeHandler integration', () => {
 
     it('should throw an error if `allowed` is `false`', () => {
       const model = {
-        getAccessToken: () => {},
-        getClient: () => {},
-        saveAuthorizationCode: () => {},
+        getAccessToken: function() {
+          return {
+            user: {},
+            accessTokenExpiresAt: new Date(new Date().getTime() + 10000)
+          };
+        },
+        getClient: function() {
+          return { grants: ['authorization_code'], redirectUris: ['http://example.com/cb'] };
+        },
+        saveAuthorizationCode: function() {
+          throw new Error('Unhandled exception');
+        }
       };
       const handler = new AuthorizeHandler({
         authorizationCodeLifetime: 120,
         model,
       });
       const request = new Request({
-        body: {},
-        headers: {},
+        body: {
+          client_id: 'test'
+        },
+        headers: {
+          'Authorization': 'Bearer foo'
+        },
         method: 'ANY',
-        query: { allowed: 'false' },
+        query: {
+          allowed: 'false',
+          state: 'foobar'
+        }
       });
       const response = new Response({ body: {}, headers: {} });
 
@@ -217,6 +233,11 @@ describe('AuthorizeHandler integration', () => {
           e.message.should.equal(
             'Access denied: user denied access to application',
           );
+          response
+            .get('location')
+            .should.equal(
+              'http://example.com/cb?error=access_denied&error_description=Access%20denied%3A%20user%20denied%20access%20to%20application&state=foobar',
+            );
         });
     });
 
@@ -419,7 +440,7 @@ describe('AuthorizeHandler integration', () => {
           response
             .get('location')
             .should.equal(
-              'http://example.com/cb?error=invalid_scope&error_description=Invalid%20parameter%3A%20%60scope%60',
+              'http://example.com/cb?error=invalid_scope&error_description=Invalid%20parameter%3A%20%60scope%60&state=foobar',
             );
         });
     });
@@ -509,7 +530,7 @@ describe('AuthorizeHandler integration', () => {
           should.fail('should.fail', '');
         })
         .catch(function() {
-          response.get('location').should.equal('http://example.com/cb?error=invalid_scope&error_description=Invalid%20scope%3A%20Requested%20scope%20is%20invalid');
+          response.get('location').should.equal('http://example.com/cb?error=invalid_scope&error_description=Invalid%20scope%3A%20Requested%20scope%20is%20invalid&state=foobar');
         });
     });
 

@@ -77,12 +77,6 @@ export class AuthorizeHandler {
       );
     }
 
-    if (request.query.allowed === 'false') {
-      throw new AccessDeniedError(
-        'Access denied: user denied access to application',
-      );
-    }
-
     // Extend model object with request
     this.model.request = request;
 
@@ -95,11 +89,17 @@ export class AuthorizeHandler {
     let responseType: any;
     const uri: string = this.getRedirectUri(request, client);
     try {
-      const requestedScope = this.getScope(request);
+      state = this.getState(request);
+      if (request.query.allowed === 'false') {
+        throw new AccessDeniedError(
+          'Access denied: user denied access to application',
+        );
+      }
 
+      const requestedScope = this.getScope(request);
       const validScope = await this.validateScope(user, client, requestedScope);
       scope = validScope;
-      state = this.getState(request);
+
       RequestedResponseType = this.getResponseType(request, client);
       responseType = new RequestedResponseType(this.options);
       const codeOrAccessToken = await responseType.handle(
