@@ -48,8 +48,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "tslint -p tsconfig.build.json -c tslint.json",
-    "lint:all": "tslint -p tsconfig.json -c tslint.json",
+    "lint": "tslint -p tsconfig.build.json -c tslint.json --fix",
+    "lint:all": "tslint -p tsconfig.json -c tslint.json --fix",
     "build:clean": "npx shx rm -rf ./dist",
     "build": "npx npm-run-all build:clean build:test:*",
     "build:test:src": "npx tsc -p tsconfig.json",
