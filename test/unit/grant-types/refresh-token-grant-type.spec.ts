@@ -211,9 +211,6 @@ describe('RefreshTokenGrantType', () => {
           model.saveToken.firstCall.args[1].should.equal(client);
           model.saveToken.firstCall.args[2].should.equal(user);
           model.saveToken.firstCall.thisValue.should.equal(model);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -249,9 +246,6 @@ describe('RefreshTokenGrantType', () => {
           model.saveToken.firstCall.args[1].should.equal(client);
           model.saveToken.firstCall.args[2].should.equal(user);
           model.saveToken.firstCall.thisValue.should.equal(model);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
 
@@ -289,9 +283,6 @@ describe('RefreshTokenGrantType', () => {
           model.saveToken.firstCall.args[1].should.equal(client);
           model.saveToken.firstCall.args[2].should.equal(user);
           model.saveToken.firstCall.thisValue.should.equal(model);
-        })
-        .catch(() => {
-          should.fail('should.fail', '');
         });
     });
   });
